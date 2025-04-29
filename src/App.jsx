@@ -1,9 +1,9 @@
 import './App.css'
 import {Routes ,Route} from 'react-router'
-import Login from './pages/Login'
-import Homepage from './pages/Homepage'
-import Signup from './pages/Signup'
-import Navbar from './components/Navbar'
+import NavBar from './components/Navbar/NavBar'
+import SignUp from './components/SignUp/SignUp'
+import Login from './components/Login/Login'
+import Homepage from './components/Homepage/Homepage'
 import ValidateIsLoggedIn from './validators/ValidateIsLoggedIn'
 import ValidateIsLoggedOut from './validators/ValidateIsLoggedOut'
 
@@ -12,7 +12,7 @@ function App() {
 
   return (
     <>
-      <Navbar/>
+      <NavBar/>
       <Routes>
         <Route path="/signup" element={<Signup/>}/>
         <Route path="/login" element={<Login/>}/>

@@ -1,5 +1,5 @@
 import {useContext,useEffect} from 'react'
-import { authContext } from '../context/AuthContext'
+import { authContext } from '../../context/AuthContext'
 import axios from 'axios'
 
 function Homepage() {
