@@ -47,7 +47,7 @@ function AuthForm() {
           </button>
         </div>
 
-        <h4>{isLogin ? 'Sign Up as Worker' : 'Sign Up as Business'}</h4>
+        <h4>{isLogin ? 'Sign up as Worker' : 'Sign up as Business'}</h4>
         <h6 className="auth-text">
           {isLogin
             ? 'Create your Green World account below.'
