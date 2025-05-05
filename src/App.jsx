@@ -1,11 +1,9 @@
 import './App.css'
 import {Routes ,Route} from 'react-router'
 import NavBar from './components/Navbar/NavBar'
-import SignUp from './components/SignUp/SignUp'
-import Login from './components/Login/Login'
-import Homepage from './components/Homepage/Homepage'
-import ValidateIsLoggedIn from './validators/ValidateIsLoggedIn'
-import ValidateIsLoggedOut from './validators/ValidateIsLoggedOut'
+import SignUp from './components/Auth/SignUp'
+import Login from './components/Auth/Login'
+import Homepage from './components/Home/Homepage'
 
 function App() {
 
@@ -14,8 +12,9 @@ function App() {
     <>
       <NavBar/>
       <Routes>
-        <Route path="/signup" element={<Signup/>}/>
+        <Route path="/" element={<Homepage/>}/>
         <Route path="/login" element={<Login/>}/>
+        <Route path="/signup" element={<SignUp/>}/>
       </Routes>
     </>
   )
