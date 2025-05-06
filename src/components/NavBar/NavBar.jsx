@@ -12,7 +12,7 @@ function NavBar() {
       
       <div className="nav-content">
           
-        <Link to='/' className="light-text"><h1 color="white">TADWEER</h1></Link>
+        <Link to='/' className="dark-green-text"><h1 color="white">TADWEER</h1></Link>
 
         <ul className="nav-list">
           <Link to="/login"><h4 className="light-text">Login</h4></Link>
