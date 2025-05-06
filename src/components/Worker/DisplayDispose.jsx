@@ -20,6 +20,8 @@ function DisplayDispose() {
     <div className="page">
 
       <div className="container">
+        <div className="green-borded">Worker</div>
+        <br />
         <div className="header">Help protect the environment by collecting items and recycling them</div>
       </div>
 
@@ -29,7 +31,12 @@ function DisplayDispose() {
           <div key={req.id} className="row">
 
             <div className="info">
-              <div className="company-name">{req.company}</div>
+
+              <div className="company-name-with-location">
+                <span className="company">{req.company}</span>
+                <button className="location-button">Location</button>
+              </div>
+
               <div className="time">{req.time}</div>
             </div>
 

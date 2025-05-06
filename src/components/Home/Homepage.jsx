@@ -17,7 +17,7 @@ function Homepage() {
     <div className='homepage'>
       <div className='landing-content'>
         <h3 className='vision-text'>"Discover easy and impactful ways to recycle with Tadweer transforming waste into a sustainable future, one step at a time"</h3>
-        <h4 className='landing-text'>Join the Tadweer Movement Recycle Today for a Greener Tomorrow..</h4>
+        <h4 className='landing-text'>Join the Tadweer Movement Recycle Today for a Greener Tomorrow</h4>
       </div>
     </div>
   )
