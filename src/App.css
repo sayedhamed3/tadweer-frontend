@@ -44,7 +44,7 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: linear-gradient(to right, rgb(88, 113, 11), #627f13);
+  background: linear-gradient(to right, #99b91c, #627f13);
   height: 100%;
   width: 100%;
 }

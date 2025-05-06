@@ -33,7 +33,7 @@ function DisplayDispose() {
             <div className="info">
 
               <div className="company-name-with-location">
-                <span className="company">{req.company}</span>
+                <span className="company-name">{req.company}</span>
                 <button className="location-button">Location</button>
               </div>
 
