@@ -8,25 +8,19 @@ function NavBar() {
 
 
   return (
-    <div>
-      <ul>
-        <Link to="/"><li>Homepage</li></Link>
-        {user && (
+    <div className='navbar'>
+      
+      <div className="nav-content">
+          
+        <Link to='/' className="light-text"><h1 color="white">TADWEER</h1></Link>
 
-          <>
-          <li>Welcome {user.username}</li>
-          <button onClick={logout}>Logout</button>
-          </>
-        )}
-        {!user && (
-          <>
-          <Link to='/login'><li>Login</li></Link>
-          <Link to='/signup'><li>Signup</li></Link>
-          </>
-        )}
-        
+        <ul className="nav-list">
+          <Link to="/login"><h4 className="light-text">Login</h4></Link>
+          <Link to="/signup"><h4 className="borded-button">Sign Up</h4></Link>
+        </ul>
 
-      </ul>
+      </div>
+      
     </div>
   )
 }
