@@ -345,7 +345,7 @@ html, body {
 
 .header {
   max-width: 300px;
-  font-size: 1.5em;
+  font-size: 1.1em;
   border-radius: 8px 8px 0 0;
   text-align: start;
   color: #2f4f31;
@@ -396,3 +396,95 @@ html, body {
   cursor: pointer;
   font-size: 0.9em;
 }
+
+.identifier {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.dispose-card {
+  padding: 20px;
+  border-radius: 16px;
+  color: white;
+  text-align: start;
+}
+
+.dispose-card h1 {
+  margin-bottom: 24px;
+  color: white;
+}
+
+.dispose-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  gap: 30px;
+}
+
+.dispose-card label {
+  text-align: left;
+  font-size: 0.9rem;
+  color: white;
+}
+
+.dispose-card input {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.dispose-card input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.dispose-card input:focus {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.dispose-card .location-input {
+  width: auto;
+  min-width: 120px;
+  max-width: 200px;
+}
+
+.dispose-card .submit-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.dispose-card button {
+  padding: 12px 24px;
+  border: 2px solid white;
+  border-radius: 8px;
+  background-color: transparent;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: auto;
+}
+
+.dispose-card button:hover {
+  background-color: white;
+  color: #333;
+}
+
+.location-button-form {
+  background-color: transparent;
+  border: 1px solid #007bff;
+  color: #007bff;
+  padding: 2px 8px;
+  margin: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
