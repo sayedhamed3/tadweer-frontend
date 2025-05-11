@@ -289,6 +289,19 @@ html, body {
   padding: 10px;
 }
 
+.table-container-right {
+  width: 70%;
+  max-width: 1200px;
+  height: calc(100vh - 160px);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  padding: 10px;
+  text-align: right;
+}
+
 .row {
   display: flex;
   justify-content: space-between;
@@ -302,9 +315,14 @@ html, body {
   text-align: left;
 }
 
+.info-material {
+  display: flex;
+  align-items: flex-start;
+}
+
 .company-name {
   color: #fff;
-  font-size: 1.1em;
+  font-size: 1.2em;
   font-weight: bold;
   margin-bottom: 4px;
 }
@@ -373,6 +391,16 @@ html, body {
   color: #FFFFFF;
 }
 
+.green-button {
+  border: 1px solid #2f4f31;
+  background: #2f4f31;
+  padding: 0.5rem 1rem;
+  margin: 10px;
+  display: inline-block;
+  border-radius: 4px;
+  color: #FFFFFF;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -395,6 +423,29 @@ html, body {
   border-radius: 4px;
   cursor: pointer;
   font-size: 0.9em;
+}
+
+.more-details-button  {
+  background-color: transparent;
+  color: #fff;
+  padding: 2px 8px;
+  margin: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.request-status-pending {
+  background-color: transparent;
+  border: 1px solid #FFD700;
+  background-color: #FFD700; 
+  color: #a39200;
+  padding: 2px 8px;
+  margin: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: 600;
 }
 
 .identifier {
@@ -488,3 +539,6 @@ html, body {
   font-size: 0.9em;
 }
 
+.material-img {
+  padding-inline-end: 20px;
+}
