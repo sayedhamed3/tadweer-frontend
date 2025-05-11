@@ -7,6 +7,8 @@ import Homepage from './components/Home/Homepage'
 import DisplayDispose from './components/Worker/DisplayDispose'
 import ListDisposeForm from './components/Worker/ListDisposeForm'
 import FormDetails from './components/Worker/FormDetails'
+import MaterialPage from './components/Company/MaterialPage'
+import CompanyDisposes from './components/Company/CompanyDisposes'
 
 function App() {
 
@@ -21,6 +23,8 @@ function App() {
         <Route path="/display-dispose" element={<DisplayDispose/>}/>
         <Route path="/list-dispose-form" element={<ListDisposeForm/>}/>
         <Route path="/form-details" element={<FormDetails/>}/>
+        <Route path="/material-list" element={<MaterialPage/>}/>company-disposes
+        <Route path="/company-disposes" element={<CompanyDisposes/>}/>
       </Routes>
     </>
   )
