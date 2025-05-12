@@ -31,8 +31,7 @@ function AuthForm() {
   return (
     <div className="homepage">
       <div className="login-card">
-        {/* Toggle Bar */}
-        <div className="form-toggle">
+        <div className="form-toggle-new">
           <button
             className={!isLogin ? "active" : ""}
             onClick={() => setIsLogin(false)}

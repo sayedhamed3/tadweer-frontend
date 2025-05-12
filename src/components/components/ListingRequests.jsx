@@ -1,6 +1,8 @@
 import React from 'react'
+import { useNavigate } from 'react-router';
 
 function ListingRequests(pros) {
+  const navigate = useNavigate()
     const requests = [
         { id: 1, company: 'Acme Logistics', time: 'Monday, 10:30 AM' },
         { id: 2, company: 'GreenCycle Co.', time: 'Tuesday, 1:15 PM' },
@@ -50,7 +52,7 @@ function ListingRequests(pros) {
             <div className="buttons">
               {
                 !pros.isForm ? 
-                <button className="button form" onClick={() => handleAccept(req.company)}>Form</button> :
+                <button className="button form" onClick={() => navigate('/form-details')}>Form</button> :
                 <>
                     <button className="button accept" onClick={() => handleAccept(req.company)}>Accept</button>
                     <button className="button reject" onClick={() => handleReject(req.company)}>Reject</button>

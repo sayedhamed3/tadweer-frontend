@@ -9,6 +9,7 @@ import ListDisposeForm from './components/Worker/ListDisposeForm'
 import FormDetails from './components/Worker/FormDetails'
 import MaterialPage from './components/Company/MaterialPage'
 import CompanyDisposes from './components/Company/CompanyDisposes'
+import NewDispose from './components/Company/NewDispose'
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="/form-details" element={<FormDetails/>}/>
         <Route path="/material-list" element={<MaterialPage/>}/>company-disposes
         <Route path="/company-disposes" element={<CompanyDisposes/>}/>
+        <Route path="/dispose-request" element={<NewDispose/>}/>
       </Routes>
     </>
   )

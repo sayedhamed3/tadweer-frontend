@@ -220,6 +220,14 @@ html, body {
   position: relative;
 }
 
+.new-dispose-alignment {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  position: relative;
+}
+
 .form-toggle button {
   background: transparent;
   border: none;
@@ -265,6 +273,22 @@ html, body {
 
 .form-toggle button.active + .toggle-indicator {
   transform: translateX(100%);
+}
+
+.form-toggle .green-borded {
+  border: 1px solid #2f4f31;
+  background: #2f4f31;
+  padding: 10px 16px;
+  margin: 0;
+  border-radius: 4px;
+  color: #FFFFFF;
+  font-size: 1rem;
+  margin: 0 10px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: normal;
+  position: relative;
 }
 
 .page {
@@ -491,6 +515,18 @@ html, body {
   box-sizing: border-box;
 }
 
+.dispose-card select {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  box-sizing: border-box;
+}
+
 .dispose-card input::placeholder {
   color: rgba(255, 255, 255, 0.7);
 }
@@ -541,4 +577,20 @@ html, body {
 
 .material-img {
   padding-inline-end: 20px;
+}
+
+.button-regular {
+  padding: 12px;
+  border: 2px solid white;
+  border-radius: 8px;
+  background-color: transparent;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button-regular:hover {
+  background-color: white;
+  color: #333;
 }
