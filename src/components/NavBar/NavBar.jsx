@@ -15,6 +15,7 @@ function NavBar() {
         <Link to='/'><h1 className="dark-green-text">TADWEER</h1></Link>
 
         <ul className="nav-list">
+          <Link to='/profile'><h4 className="dark-green-text">Profile</h4></Link>
           <Link to='/achievement'><h4 className="dark-green-text">Achievement</h4></Link>
           <Link to="/company-disposes"><h4 className="dark-green-text">Disposes</h4></Link>
           <Link to="/material-list"><h4 className="dark-green-text">Material</h4></Link>
