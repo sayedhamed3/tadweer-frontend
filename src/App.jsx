@@ -9,6 +9,8 @@ import ListDisposeForm from './components/Worker/ListDisposeForm'
 import FormDetails from './components/Worker/FormDetails'
 import MaterialPage from './components/Company/MaterialPage'
 import CompanyDisposes from './components/Company/CompanyDisposes'
+import AddressForm from './components/Address/AddressForm'
+import AddressDetails from './components/Address/AddressDetails'
 import NewDispose from './components/Company/NewDispose'
 import Achievement from './components/Company/Achievement'
 
@@ -25,6 +27,8 @@ function App() {
         <Route path="/display-dispose" element={<DisplayDispose/>}/>
         <Route path="/list-dispose-form" element={<ListDisposeForm/>}/>
         <Route path="/form-details" element={<FormDetails/>}/>
+        <Route path="/address-form" element={<AddressForm/>}/>
+        <Route path="/address-details/:addressId" element={<AddressDetails />}/>
         <Route path="/material-list" element={<MaterialPage/>}/>
         <Route path="/company-disposes" element={<CompanyDisposes/>}/>
         <Route path="/dispose-request" element={<NewDispose/>}/>

@@ -36,6 +36,8 @@ function UserProvider(props){
         else{
             setUser(null)
         }
+
+        console.log("User in context:" , user)
     }
 
     function logout(){
