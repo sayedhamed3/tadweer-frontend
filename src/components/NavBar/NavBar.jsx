@@ -20,6 +20,7 @@ function NavBar() {
           <Link to="/form-details"><h4 className="dark-green-text">Details</h4></Link>
           <Link to="/list-dispose-form"><h4 className="dark-green-text">Forms</h4></Link>
           <Link to="/display-dispose"><h4 className="dark-green-text">Disposes</h4></Link>
+          <Link to="/address-form"><h4 className="dark-green-text">Address Form</h4></Link>
           <Link to="/login"><h4 className="light-text">Login</h4></Link>
           <Link to="/signup"><h4 className="borded-button">Sign Up</h4></Link>
         </ul>
