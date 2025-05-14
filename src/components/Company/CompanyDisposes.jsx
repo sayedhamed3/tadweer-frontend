@@ -26,7 +26,21 @@ function CompanyDisposes() {
             </div>
 
             <div className="table-container-right">
+            <div className="button-row">
+                <div className='dispose-card'>
+                    <div>
+                        <select id="filter" defaultValue="All">
+                            <option value="all">All</option>
+                            <option value="pending">Pending</option>
+                            <option value="processing">Processing</option>
+                            <option value="Completed">Completed</option>
+                            <option value="canceled">Canceled</option>
+                        </select>
+                    </div>
+                </div>
                 <button className="green-button" onClick={() => navigate('/dispose-request')}>New Request +</button>
+            </div>
+
             {requests.map((req) => (
 
                 <div key={req.id} className="row">
