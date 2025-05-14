@@ -1,6 +1,8 @@
 import React from 'react'
+import { useNavigate } from 'react-router';
 
 function CompanyDisposes() {
+    const navigate = useNavigate()
     const requests = [
         { id: 3, company: 'EcoDrop', time: 'Wednesday, 9:00 AM' },
         { id: 4, company: 'EcoDrop', time: 'Wednesday, 9:00 AM' },
@@ -24,7 +26,21 @@ function CompanyDisposes() {
             </div>
 
             <div className="table-container-right">
-                <button className="green-button ">New Request +</button>
+            <div className="button-row">
+                <div className='dispose-card'>
+                    <div>
+                        <select id="filter" defaultValue="All">
+                            <option value="all">All</option>
+                            <option value="pending">Pending</option>
+                            <option value="processing">Processing</option>
+                            <option value="Completed">Completed</option>
+                            <option value="canceled">Canceled</option>
+                        </select>
+                    </div>
+                </div>
+                <button className="green-button" onClick={() => navigate('/dispose-request')}>New Request +</button>
+            </div>
+
             {requests.map((req) => (
 
                 <div key={req.id} className="row">
