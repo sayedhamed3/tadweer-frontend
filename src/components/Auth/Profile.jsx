@@ -13,7 +13,6 @@ function Profile() {
       try {
           const userInfo = await getOneCompany(user?.companyId);
           setUserDetails(userInfo);
-          console.log(`hello ${userInfo}`)
       } catch (error) {
           console.error('Error fetching user details:', error);
       }
