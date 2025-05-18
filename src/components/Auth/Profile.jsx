@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { authContext } from '../../context/AuthContext';
 import { useNavigate } from 'react-router'
-import { getOneCompany } from '../../services/companyServices';
+import { getOneCompany, removeAddressFromCompany } from '../../services/companyServices';
 
 function Profile() {
     const [userDetails, setUserDetails] = useState({})
@@ -87,7 +87,7 @@ function Profile() {
                 </div>
                 {userDetails?.addresses && userDetails?.addresses.map((req) => (
 
-                    <div key={req.id} className="row">
+                    <div key={req._id} className="row">
 
                         <div className="info">
                             <div className="company-name-with-location">
@@ -99,8 +99,11 @@ function Profile() {
                         </div>
 
                         <div className="buttons">
-                        <button className="button form">Edit</button>
-                        <button className="button reject">Remove</button>
+                        <button className="button form" onClick={() => navigate('/address-form')}>Edit</button>
+                        <button className="button reject" onClick={() => {
+                            removeAddressFromCompany(user?.companyId, req._id)
+                            window.location.reload()
+                            }}>Remove</button>
                         </div>
 
                     </div>
