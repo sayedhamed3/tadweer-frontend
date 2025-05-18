@@ -1,18 +1,35 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { authContext } from '../../context/AuthContext';
+import { useNavigate } from 'react-router'
+import { getOneCompany } from '../../services/companyServices';
 
 function Profile() {
-    const requests = [
-        { id: 3, company: 'EcoDrop', time: 'Wednesday, 9:00 AM' },
-        { id: 4, company: 'EcoDrop', time: 'Wednesday, 9:00 AM' },
-        { id: 5, company: 'EcoDrop', time: 'Wednesday, 9:00 AM' },
-        { id: 6, company: 'EcoDrop', time: 'Wednesday, 9:00 AM' },
-        { id: 7, company: 'EcoDrop', time: 'Wednesday, 9:00 AM' },
-        { id: 8, company: 'EcoDrop', time: 'Wednesday, 9:00 AM' },
-        { id: 9, company: 'EcoDrop', time: 'Wednesday, 9:00 AM' },
-    ];
+    const [userDetails, setUserDetails] = useState({})
 
-// Worker -> Name, Phone, Password
-// Company -> Username, phone, image, Password, addresses
+    const { user } = useContext(authContext)
+    const navigate = useNavigate()
+
+    async function getUserDetails() {
+      try {
+          const userInfo = await getOneCompany(user?.companyId);
+          setUserDetails(userInfo);
+          console.log(`hello ${userInfo}`)
+      } catch (error) {
+          console.error('Error fetching user details:', error);
+      }
+  }
+
+    useEffect(() => {
+      if (user) {
+          getUserDetails();
+      }
+  }, [user]);
+
+  function openGoogleMaps(lat, long) {
+    const url = `https://www.google.com/maps?q=${lat},${long}`;
+    window.open(url, '_blank');
+  }
+
   return (
     <div className="page">
 
@@ -42,8 +59,7 @@ function Profile() {
                         <input
                         type="text"
                         id="username"
-                        placeholder="TADWEER"
-                        defaultValue="TADWEER"
+                        value={userDetails?.name || ''}
                         required
                         disabled
                         />
@@ -53,8 +69,7 @@ function Profile() {
                         <input
                         type="text"
                         id="phone"
-                        placeholder="+973 34563456"
-                        defaultValue="+973 34563456"
+                        value={userDetails?.phone || ''}
                         required
                         disabled
                         />
@@ -68,19 +83,19 @@ function Profile() {
                 }}>Addresses</span>
                 <div className="button-row">
                     <div></div>
-                    <button className="green-button" onClick={() => navigate('/dispose-request')}>New Address +</button>
+                    <button className="green-button" onClick={() => navigate('/address-form')}>New Address +</button>
                 </div>
-                {requests.map((req) => (
+                {userDetails?.addresses && userDetails?.addresses.map((req) => (
 
                     <div key={req.id} className="row">
 
                         <div className="info">
                             <div className="company-name-with-location">
-                                <span className="company-name">Address Name</span>
-                                <button className="location-button">View Location</button>
+                                <span className="company-name">{req.name}</span>
+                                <button className="location-button" onClick={() => openGoogleMaps(req.coordinates.lat, req.coordinates.lng)}>View Location</button>
                             </div>
 
-                            <div className="time">House 000, Road 0000, Block 0000</div>
+                            <div className="time">{`${req.state}, ${req.country}, ${req.city}, ${req.street}`}</div>
                         </div>
 
                         <div className="buttons">
