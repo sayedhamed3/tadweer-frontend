@@ -17,7 +17,7 @@ function Profile() {
       } catch (error) {
           console.error('Error fetching user details:', error);
       }
-  }
+    }
 
   async function deleteAccount() {
     try {
@@ -108,7 +108,7 @@ function Profile() {
                         </div>
 
                         <div className="buttons">
-                        <button className="button form" onClick={() => navigate('/address-form', { state: { id: req._id, isEdited: true } })}>Edit</button>
+                        {/* <button className="button form" onClick={() => navigate('/address-form', { state: { id: req._id, isEdited: true } })}>Edit</button> */}
                         <button className="button reject" onClick={() => {
                             removeAddressFromCompany(user?.companyId, req._id)
                             window.location.reload()
