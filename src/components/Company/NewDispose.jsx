@@ -1,12 +1,14 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { createDisposal } from '../../services/disposalServices'
 import { authContext } from '../../context/AuthContext'
+import { getOneCompany } from '../../services/companyServices'
 
 function NewDispose() {
     const navigate = useNavigate()
     const { user } = useContext(authContext)
     const [isSchedule, setIsSchedule] = useState(false)
+    const [userDetails, setUserDetails] = useState({})
     const [formData, setFormData] = useState({
         company: "",
         day: "",
@@ -14,6 +16,21 @@ function NewDispose() {
         time: "",
         addressName: "",
     })
+
+    async function getUserDetails() {
+        try {
+            const userInfo = await getOneCompany(user?.companyId);
+            setUserDetails(userInfo);
+        } catch (error) {
+            console.error('Error fetching user details:', error);
+        }
+    }
+
+    useEffect(() => {
+        if(user) {
+            getUserDetails()
+        }
+    }, [user])
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -28,12 +45,12 @@ function NewDispose() {
             const selectedDate = formData.day !== "" ? formData.day : Date(`${formData.date}${formData.time}`)
 
             const disposalForm = {
-                company: user?._id,
+                company: user?.companyId,
                 disposalDate: selectedDate,
                 addressName: formData.addressName
             }
 
-            console.log(`HELLO ${disposalForm}`)
+            console.log(disposalForm.addressName)
             await createDisposal(disposalForm)
         } catch (error) {
             
@@ -43,15 +60,17 @@ function NewDispose() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            createNewDispose()
-            setFormData({
-                company: "",
-                day: "",
-                date: "",
-                time: "",
-                addressName: "",
-            });
-            navigate('/company-disposes')
+           if(formData.addressName !== "") {
+                createNewDispose()
+                setFormData({
+                    company: "",
+                    day: "",
+                    date: "",
+                    time: "",
+                    addressName: "",
+                });
+                navigate('/company-disposes')
+           }
         } catch (err) {
             console.log(err)
         }
@@ -142,11 +161,16 @@ function NewDispose() {
 
                 <div>
                     <label htmlFor="addressName">Address</label>
-                    <select id="addressName" name='addressName' defaultValue="Select Address" onChange={handleChange}>
-                        <option value="Select Address">Select Address</option>
-                        <option value="Uptown Market">Uptown Market</option>
-                        <option value="Riverside Street">Riverside Street</option>
-                        <option value="City Center">City Center</option>
+                    <select
+                        id="addressName"
+                        name="addressName"
+                        defaultValue=""
+                        required
+                        onChange={handleChange}>
+                        <option value="" disabled>Select Address</option>
+                        {userDetails?.addresses?.map((req, i) => (
+                            <option key={i} value={req.name}>{req.name}</option>
+                        ))}
                     </select>
                 </div>
 
