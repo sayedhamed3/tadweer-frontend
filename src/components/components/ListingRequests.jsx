@@ -32,7 +32,7 @@ function ListingRequests(props) {
             <div className="info">
 
               <div className="company-name-with-location">
-                <span className="company-name">{req.company.name}</span>
+                {/* <span className="company-name">{req.company.name}</span> */}
                 <button className="location-button">Location</button>
               </div>
 

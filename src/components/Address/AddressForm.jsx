@@ -4,7 +4,7 @@ import { GoogleMap, useLoadScript, Marker} from '@react-google-maps/api'
 import { addAddressToCompany } from '../../services/companyServices';
 import { authContext } from '../../context/AuthContext';
 import { getOneCompany } from '../../services/companyServices';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 const mapContainerStyle = {
   height: "400px",
@@ -18,6 +18,9 @@ const center = {
 
 
 function AddressForm(props) {
+
+    const passedData = useLocation()
+    const currentAddressId = passedData.state?.id
 
     const { user } = useContext(authContext);
 
@@ -38,8 +41,7 @@ function AddressForm(props) {
 
     const [company, setCompany] = useState(null);
 
-    // check if edit mode is enabled
-    const isEdit = props.isEdit || false;
+    const isEdit = passedData.state?.isEdited || false;
 
     const loadAddress = async () => {
   
@@ -47,7 +49,7 @@ function AddressForm(props) {
         const company = await getOneCompany(companyId);
         setCompany(company);
         if (isEdit) {
-            const addressId = props.addressId;
+            const addressId = currentAddressId;
             const address = company.addresses.find(address => address._id === addressId);
 
             if (address) {
@@ -69,8 +71,8 @@ function AddressForm(props) {
     }
 
     useEffect(() => {
-        // loadAddress();
-    }, [isEdit, props.addressId]);
+        loadAddress();
+    }, [isEdit, currentAddressId]);
 
     const { isLoaded, loadError } = useLoadScript({
   googleMapsApiKey: `${import.meta.env.VITE_GOOGLE_API_KEY}`
@@ -136,6 +138,9 @@ function AddressForm(props) {
         const companyId = user.companyId; 
 
         try {
+          if(isEdit) {
+            
+          } else {
             await addAddressToCompany(companyId, formData)
             setFormData({
                 name: '',
@@ -143,6 +148,7 @@ function AddressForm(props) {
                 weight: '',
                 notes: ''
             });
+          }
             navigate('/profile')
         } catch (err) {
             console.log(err)
@@ -288,12 +294,7 @@ function AddressForm(props) {
             </GoogleMap>
             )}
         
-          
-
-
-          
-
-            <button type="submit">Submit</button>
+            <button type="submit">{isEdit ? "Update" : "Submit"}</button>
             </form>
             </div>
         </div>

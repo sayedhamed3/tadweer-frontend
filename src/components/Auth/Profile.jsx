@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { authContext } from '../../context/AuthContext';
 import { useNavigate } from 'react-router'
 import { getOneCompany, removeAddressFromCompany } from '../../services/companyServices';
+import { deleteUser } from '../../services/userServices';
 
 function Profile() {
     const [userDetails, setUserDetails] = useState({})
@@ -16,6 +17,15 @@ function Profile() {
       } catch (error) {
           console.error('Error fetching user details:', error);
       }
+  }
+
+  async function deleteAccount() {
+    try {
+        await deleteUser(user?.companyId)
+        navigate("/")
+    } catch (error) {
+        console.error('Error fetching user details:', error); 
+    }
   }
 
     useEffect(() => {
@@ -44,7 +54,7 @@ function Profile() {
     <div className="table-container-right">
     <div className="button-row">
         <div></div>
-        <button className="button reject">Delete Profile</button>
+        <button className="button reject" onClick={() => deleteAccount()}>Delete Profile</button>
     </div>
     
     <div className="dispose-card">
@@ -98,7 +108,7 @@ function Profile() {
                         </div>
 
                         <div className="buttons">
-                        <button className="button form" onClick={() => navigate('/address-form')}>Edit</button>
+                        <button className="button form" onClick={() => navigate('/address-form', { state: { id: req._id, isEdited: true } })}>Edit</button>
                         <button className="button reject" onClick={() => {
                             removeAddressFromCompany(user?.companyId, req._id)
                             window.location.reload()
