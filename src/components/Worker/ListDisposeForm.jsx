@@ -8,7 +8,7 @@ function ListDisposeForm() {
 
   // get worker id from AuthContext
   const {user } = useContext(authContext)
-  const workerId = user.workerId
+  const workerId = user?.workerId
 
   const [disposals, setDisposals] = React.useState([])
 

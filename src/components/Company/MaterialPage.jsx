@@ -101,7 +101,7 @@ function MaterialPage() {
         <div className="table-container">
           {materials.map((material) => (
 
-            <div key={material.id} className="row">
+            <div key={material.id} className="rowd">
               <Link to={`/materials/${material._id}`} >
                 <div className="info-material">
                   <img className='material-img' src={`/images/${material.type}/${material.imageUrl}`} alt={material.name} width="100" />
