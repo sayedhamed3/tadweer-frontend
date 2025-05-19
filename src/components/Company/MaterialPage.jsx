@@ -1,75 +1,129 @@
 import React from 'react'
+import { useEffect } from 'react'
+import { useState } from 'react'
+import { searchMaterial } from '../../services/materialServices'
+import { Link } from 'react-router'
+import './Material.css'
 
 function MaterialPage() {
-    const materials = [
-        {
-            id: 1,
-            name: 'Pine Wood',
-            image: 'https://www.guptapinewood.in/img/pro-detail-1.jpg',
-            details: 'Lightweight softwood with a pale yellow color and straight grain. Common in furniture and cabinetry.'
-        },
-        {
-            id: 2,
-            name: 'Stainless Steel',
-            image: 'https://www.guptapinewood.in/img/pro-detail-1.jpg',
-            details: 'Corrosion-resistant alloy used in appliances, medical tools, and construction. Known for its durability and sleek finish.'
-        },
-        {
-            id: 3,
-            name: 'Granite',
-            image: 'https://www.guptapinewood.in/img/pro-detail-1.jpg',
-            details: 'Hard, speckled natural stone ideal for countertops and flooring due to its strength and resistance to scratching.'
-        },
-        {
-            id: 4,
-            name: 'Tempered Glass',
-            image: 'https://www.guptapinewood.in/img/pro-detail-1.jpg',
-            details: 'Safety glass processed to be stronger and shatter-resistant. Commonly used in doors, windows, and screens.'
-        },
-        {
-            id: 5,
-            name: 'Genuine Leather',
-            image: 'https://www.guptapinewood.in/img/pro-detail-1.jpg',
-            details: 'Durable material made from animal hide. Used in clothing, furniture, and automotive interiors.'
-        },
-        {
-            id: 6,
-            name: 'PVC Plastic',
-            image: 'https://www.guptapinewood.in/img/pro-detail-1.jpg',
-            details: 'Synthetic plastic polymer used in pipes, flooring, and packaging. Known for its flexibility and resistance to chemicals.'
-        }
-    ];
-    
+
+  const [materials, setMaterials] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [page, setPage] = useState(1)
+  const [search, setSearch] = useState("")
+  const [type, setType] = useState("")
+  const [totalPages, setTotalPages] = useState(null)
+  const [totalItems, setTotalItems] = useState(null)
+
+  const getMaterials = async (page, search, type) => {
+    try {
+      const res = await searchMaterial(page, search, type);
+      console.log(res)
+
+      setMaterials(res.materials)
+      setTotalPages(res.totalPages)
+      setTotalItems(res.totalItems)
+    } catch (err) {
+      console.log(err)
+      setError("Failed to Retrieve Materials")
+    }
+    finally {
+      setLoading(false)
+    }
+  }
+
+  const handlePrev = () => {
+    if (page == 1) return
+
+    setPage(page - 1)
+  }
+
+  const handleNext = () => {
+    if (page == totalPages) return
+
+    setPage(page + 1)
+  }
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value)
+    setPage(totalPages > 0 ? 1 : 0)
+  }
+
+  const handleType = (e) => {
+    setType(e.target.value)
+    setPage(totalPages > 0 ? 1 : 0)
+  }
+
+  const resetSearch = () => {
+    setPage(1)
+    setSearch("")
+    setType("")
+  }
+
+  useEffect(() => {
+    getMaterials(page, search, type)
+  }, [page, search, type])
+
   return (
     <div className="page">
-
+      {error && (<p>{error}</p>)}
       <div className="container">
         <div className='identifier'>
-            <div className="green-borded">Company</div>
-            <div className="dark-green-text">Accepted Material</div>
+          <div className="green-borded">Company</div>
+          <div className="dark-green-text">Accepted Material</div>
         </div>
         <br />
         <div className="header">Help protect the environment by collecting items and recycling them</div>
       </div>
 
-      <div className="table-container">
-        {materials.map((material) => (
+      <div className='right-content'>
+        <div className="search-filter-wrapper">
+          <input
+            id="search-bar"
+            type="text"
+            placeholder="Search materials..."
+            value={search}
+            onChange={handleSearch}
+          />
+          <select id="type" value={type} onChange={handleType}>
+            <option value="" disabled>Select Type</option>
+            <option value="plastic">Plastic</option>
+            <option value="paper">Paper</option>
+            <option value="metal">Metal</option>
+            <option value="organic">Organic</option>
+            <option value="electronic">Electronic</option>
+            <option value="glass">Glass</option>
+          </select>
+          <button id="reset-btn" onClick={resetSearch}>Reset</button>
+        </div>
 
-          <div key={material.id} className="row">
+        <div className="table-container">
+          {materials.map((material) => (
 
-            <div className="info-material">
-                <img className='material-img' src={material.image} alt={material.name} width="100"/>
-                <div className="info">
+            <div key={material.id} className="row">
+              <Link to={`/materials/${material._id}`} >
+                <div className="info-material">
+                  <img className='material-img' src={`/images/${material.type}/${material.imageUrl}`} alt={material.name} width="100" />
+                  <div className="info">
                     <span className="company-name">{material.name}</span>
                     <div className="time">{material.details}</div>
+                  </div>
                 </div>
+              </Link>
             </div>
-            
-          </div>
 
-        ))}
+
+
+          ))}
+        </div>
+
+        <div id="navigation">
+          <button id="prev-btn" disabled={page === 1} onClick={handlePrev}>Prev</button>
+          <p><span id='page-number'>{page} </span>/ <span id="total-page">{totalPages}</span></p>
+          <button id="next-btn" disabled={page === totalPages} onClick={handleNext}>Next</button>
+        </div>
       </div>
-
     </div>
   )
 }

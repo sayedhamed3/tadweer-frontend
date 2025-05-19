@@ -14,6 +14,8 @@ import AddressDetails from './components/Address/AddressDetails'
 import NewDispose from './components/Company/NewDispose'
 import Achievement from './components/Company/Achievement'
 
+import MaterialDetails from './components/Company/MaterialDetails'
+
 function App() {
 
 
@@ -29,10 +31,12 @@ function App() {
         <Route path="/form-details" element={<FormDetails/>}/>
         <Route path="/address-form" element={<AddressForm/>}/>
         <Route path="/address-details/:addressId" element={<AddressDetails />}/>
-        <Route path="/material-list" element={<MaterialPage/>}/>
+        <Route path="/materials" element={<MaterialPage/>}/>
         <Route path="/company-disposes" element={<CompanyDisposes/>}/>
         <Route path="/dispose-request" element={<NewDispose/>}/>
         <Route path="/achievement" element={<Achievement/>}/>
+
+        <Route path="/materials/:materialId" element={<MaterialDetails />} />
       </Routes>
     </>
   )
