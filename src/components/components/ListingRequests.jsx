@@ -33,6 +33,11 @@ function ListingRequests(props) {
     }
   }
 
+  function openGoogleMaps(lat, long) {
+    const url = `https://www.google.com/maps?q=${lat},${long}`;
+    window.open(url, '_blank');
+  }
+
   return (
     <div className="page">
 
@@ -57,16 +62,32 @@ function ListingRequests(props) {
 
               <div className="company-name-with-location">
                 <span className="company-name">{req.addressName}</span>
-                <button className="location-button">Location</button>
+                <button className="location-button" onClick={() => {
+                  const matchedAddress = req.company.addresses.find(
+                    (address) => address.name === req.addressName
+                  )
+                  openGoogleMaps(matchedAddress ? matchedAddress.coordinates.lat : 0.0, matchedAddress ? matchedAddress.coordinates.lng : 0.0)
+                }}>Location</button>
               </div>
 
-              <div className="time">{req.disposalDate}</div>
+              <div className="time">{Date(req.disposalDate)}</div>
             </div>
 
             <div className="buttons">
               {
                 !isForm ? 
-                <button className="button form" onClick={() => navigate('/form-details')}>Form</button> :
+                <button className="button form" onClick={() => {
+                  const matchedAddress = req.company.addresses.find(
+                    (address) => address.name === req.addressName
+                  )
+                  navigate('/form-details', {
+                    state: {
+                      requestId: req._id,
+                      address: matchedAddress,
+                      date: req.disposalDate
+                    }
+                  })
+                }}>Form</button> :
                 <>
                     <button className="button accept" onClick={() => acceptRequest(req._id)}>Accept</button>
                     <button className="button reject" onClick={() => rejectRequest(req._id)}>Reject</button>
