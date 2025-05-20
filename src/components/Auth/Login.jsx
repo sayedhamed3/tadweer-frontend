@@ -10,6 +10,8 @@ function Login() {
           password:""
       })
 
+      const [error, setError] = useState(null)
+
       const {validateToken} = useContext(authContext)
       const navigate = useNavigate()
 
@@ -18,6 +20,7 @@ function Login() {
     }
 
     async function handleSubmit(e){
+      setError(null)
       e.preventDefault()
       try{
           const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/login`,formData)
@@ -28,9 +31,9 @@ function Login() {
       }
       catch(err){
           console.log(err)
+          setError("Wrong username or password, please try again.")
       }
   }
-
 
   return (
     <div className='homepage'>
@@ -56,6 +59,8 @@ function Login() {
             value={formData.password}
             onChange={handleChange}
           />
+
+          {error ? <div className='error-div'><p className='error-message'>{error}</p> </div> : ""}
 
           <button type="submit">Login</button>
         </form>
