@@ -98,7 +98,7 @@ function MaterialPage() {
           <button id="reset-btn" onClick={resetSearch}>Reset</button>
         </div>
 
-        <div className="table-container">
+        <div className="table-container-m">
           {materials.map((material) => (
 
             <div key={material.id} className="rowd">

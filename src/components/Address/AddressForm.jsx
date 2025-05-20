@@ -4,7 +4,6 @@ import { GoogleMap, useLoadScript, Marker} from '@react-google-maps/api'
 import { addAddressToCompany } from '../../services/companyServices';
 import { authContext } from '../../context/AuthContext';
 import { getOneCompany } from '../../services/companyServices';
-import { useLocation, useNavigate } from 'react-router';
 
 const mapContainerStyle = {
   height: "400px",
@@ -19,12 +18,7 @@ const center = {
 
 function AddressForm(props) {
 
-    const passedData = useLocation()
-    const currentAddressId = passedData.state?.id
-
     const { user } = useContext(authContext);
-
-    const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         name: '',
@@ -41,15 +35,16 @@ function AddressForm(props) {
 
     const [company, setCompany] = useState(null);
 
-    const isEdit = passedData.state?.isEdited || false;
+    // check if edit mode is enabled
+    const isEdit = props.isEdit || false;
 
     const loadAddress = async () => {
-  
-        if(user) {const companyId = user.companyId;
+        console.log("User in loadAddress:", user)
+        const companyId = user.companyId;
         const company = await getOneCompany(companyId);
         setCompany(company);
         if (isEdit) {
-            const addressId = currentAddressId;
+            const addressId = props.addressId;
             const address = company.addresses.find(address => address._id === addressId);
 
             if (address) {
@@ -67,12 +62,12 @@ function AddressForm(props) {
                     }
                 });
             }
-        }}
+        }
     }
 
     useEffect(() => {
         loadAddress();
-    }, [isEdit, currentAddressId]);
+    }, [isEdit, props.addressId]);
 
     const { isLoaded, loadError } = useLoadScript({
   googleMapsApiKey: `${import.meta.env.VITE_GOOGLE_API_KEY}`
@@ -138,9 +133,6 @@ function AddressForm(props) {
         const companyId = user.companyId; 
 
         try {
-          if(isEdit) {
-            
-          } else {
             await addAddressToCompany(companyId, formData)
             setFormData({
                 name: '',
@@ -148,8 +140,6 @@ function AddressForm(props) {
                 weight: '',
                 notes: ''
             });
-          }
-            navigate('/profile')
         } catch (err) {
             console.log(err)
             setError('An error occurred while submitting the form.');
@@ -189,7 +179,6 @@ function AddressForm(props) {
                 <input
                 type="text"
                 id="name"
-                name="name"
                 placeholder="Enter address name"
                 defaultValue={formData.name}
                 onChange={handleChange}
@@ -201,7 +190,6 @@ function AddressForm(props) {
                 <input
                 type="text"
                 id="street"
-                name="street"
                 placeholder="Enter street name"
                 defaultValue={formData.street}
                 onChange={handleChange}
@@ -213,7 +201,6 @@ function AddressForm(props) {
                 <input
                 type="text"
                 id="city"
-                name="city"
                 placeholder="Enter city name"
                 defaultValue={formData.city}
                 onChange={handleChange}
@@ -225,7 +212,6 @@ function AddressForm(props) {
                 <input
                 type="text"
                 id="state"
-                name="state"
                 placeholder="Enter state name"
                 defaultValue={formData.state}
                 onChange={handleChange}
@@ -237,7 +223,6 @@ function AddressForm(props) {
                 <input
                 type="text"
                 id="postalCode"
-                name='postalCode'
                 placeholder="Enter postal code"
                 defaultValue={formData.postalCode}
                 onChange={handleChange}
@@ -249,7 +234,6 @@ function AddressForm(props) {
                 <input
                 type="text"
                 id="country"
-                name='country'
                 placeholder="Enter country name"
                 defaultValue={formData.country}
                 onChange={handleChange}
@@ -294,7 +278,12 @@ function AddressForm(props) {
             </GoogleMap>
             )}
         
-            <button type="submit">{isEdit ? "Update" : "Submit"}</button>
+          
+
+
+          
+
+            <button type="button">Submit</button>
             </form>
             </div>
         </div>
