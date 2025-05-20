@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { createDisposal } from '../../services/disposalServices'
 import { authContext } from '../../context/AuthContext'
-import { getOneCompany } from '../../services/companyServices'
+import { addScheduleToCompany, getOneCompany } from '../../services/companyServices'
 
 function NewDispose() {
     const navigate = useNavigate()
@@ -44,14 +44,24 @@ function NewDispose() {
         try {
             const selectedDate = formData.day !== "" ? formData.day : Date(`${formData.date}${formData.time}`)
 
-            const disposalForm = {
+            const disposalForm = formData.day !== "" ? {
                 company: user?.companyId,
                 disposalDate: selectedDate,
+                addressName: formData.addressName
+            } : {
+                company: user?.companyId,
+                day: selectedDate,
+                time: formData.time,
                 addressName: formData.addressName
             }
 
             console.log(disposalForm.addressName)
-            await createDisposal(disposalForm)
+            if(user?.company) {
+                await createDisposal(disposalForm) 
+            } else {
+                addScheduleToCompany(disposalForm)
+            }
+            
         } catch (error) {
             
         }
