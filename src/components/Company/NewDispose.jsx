@@ -56,7 +56,7 @@ function NewDispose() {
             }
 
             console.log(disposalForm.addressName)
-            if(user?.company) {
+            if(formData.day !== "") {
                 await createDisposal(disposalForm) 
             } else {
                 addScheduleToCompany(disposalForm)
