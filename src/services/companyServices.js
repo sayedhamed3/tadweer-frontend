@@ -73,7 +73,7 @@ const removeAddressFromCompany = async (id, addressId) => {
         const response = await axios.put(`${BASE_URL}/${id}/remove-address`, { addressId }, 
             { headers: {Authorization: `Bearer ${token}`} }
         );
-
+        console.log("HERE")
         return response.data;
     }
     catch (error) {
