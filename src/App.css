@@ -547,10 +547,47 @@ html, body {
 }
 
 .request-status-pending {
-  background-color: transparent;
-  border: 1px solid #FFD700;
   background-color: #FFD700; 
+  border: 1px solid #FFD700;
   color: #a39200;
+  padding: 2px 8px;
+  margin: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+.request-status-processing {
+  background-color: #FFA500; 
+  border: 1px solid #FFA500;
+  color: #cc8400;
+  padding: 2px 8px;
+  margin: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+.request-status-completed {
+  background-color: #28a745; 
+  border: 1px solid #28a745;
+  color: #ffffff;
+  padding: 2px 8px;
+  margin: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+
+
+.request-status-rejected {
+  background-color: #dc3545;
+  border: 1px solid #dc3545;
+  color: #ffffff;
   padding: 2px 8px;
   margin: 10px;
   border-radius: 4px;
