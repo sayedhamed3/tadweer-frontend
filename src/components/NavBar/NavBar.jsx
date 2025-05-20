@@ -1,11 +1,8 @@
 import { Link } from "react-router"
 import { useContext } from "react"
 import { authContext } from "../../context/AuthContext"
-
 function NavBar() {
   const { user, logout } = useContext(authContext)
-  console.log("User in Nav:", user)
-
   return (
     <div className='navbar'>
       <div className="nav-content">
@@ -21,8 +18,8 @@ function NavBar() {
             <>
               <Link to='/achievement'><h4 className="dark-green-text">Achievement</h4></Link>
               <Link to="/company-disposes"><h4 className="dark-green-text">Disposes</h4></Link>
-              <Link to="/materials"><h4 className="dark-green-text">Material</h4></Link>
-              <Link to="/address-form"><h4 className="dark-green-text">Address Form</h4></Link>
+              <Link to="/material-list"><h4 className="dark-green-text">Material</h4></Link>
+              {/* <Link to="/address-form"><h4 className="dark-green-text">Address Form</h4></Link> */}
               <Link to='/profile'><h4 className="dark-green-text">Profile</h4></Link>
             </>
           )}

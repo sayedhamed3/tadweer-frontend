@@ -1,7 +1,80 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router'
+import { createDisposal } from '../../services/disposalServices'
+import { authContext } from '../../context/AuthContext'
+import { getOneCompany } from '../../services/companyServices'
 
 function NewDispose() {
+    const navigate = useNavigate()
+    const { user } = useContext(authContext)
     const [isSchedule, setIsSchedule] = useState(false)
+    const [userDetails, setUserDetails] = useState({})
+    const [formData, setFormData] = useState({
+        company: "",
+        day: "",
+        date: "",
+        time: "",
+        addressName: "",
+    })
+
+    async function getUserDetails() {
+        try {
+            const userInfo = await getOneCompany(user?.companyId);
+            setUserDetails(userInfo);
+        } catch (error) {
+            console.error('Error fetching user details:', error);
+        }
+    }
+
+    useEffect(() => {
+        if(user) {
+            getUserDetails()
+        }
+    }, [user])
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    }
+
+    async function createNewDispose() {
+        try {
+            const selectedDate = formData.day !== "" ? formData.day : Date(`${formData.date}${formData.time}`)
+
+            const disposalForm = {
+                company: user?.companyId,
+                disposalDate: selectedDate,
+                addressName: formData.addressName
+            }
+
+            console.log(disposalForm.addressName)
+            await createDisposal(disposalForm)
+        } catch (error) {
+            
+        }
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+           if(formData.addressName !== "") {
+                createNewDispose()
+                setFormData({
+                    company: "",
+                    day: "",
+                    date: "",
+                    time: "",
+                    addressName: "",
+                });
+                navigate('/company-disposes')
+           }
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
   return (
     <div className="page">
@@ -33,20 +106,23 @@ function NewDispose() {
                 </button>
                 <button
                     className={isSchedule ? "green-borded" : ""}
-                    onClick={() => setIsSchedule(true)}
+                    onClick={() => {
+                        formData.day = ""
+                        setIsSchedule(true)
+                    }}
                     type="button">
                     Custom
                 </button>
             </div>
 
-            <form>
+            <form onSubmit={handleSubmit}>
 
                 {
                     !isSchedule ? 
                     <>
                         <div>
                             <label htmlFor="day">Day</label>
-                            <select id="day" defaultValue="Select Day">
+                            <select id="day" name='day' defaultValue="Select Day" onChange={handleChange}>
                                 <option value="Select Day">Select Day</option>
                                 <option value="Monday">Monday</option>
                                 <option value="Tuesday">Tuesday</option>
@@ -66,6 +142,7 @@ function NewDispose() {
                                 id="date"
                                 name="date"
                                 required
+                                onChange={handleChange}
                             />
                         </div>
                     </>
@@ -76,22 +153,28 @@ function NewDispose() {
                     <input
                         type="time"
                         id="time"
-                        defaultValue="12:00"
+                        name='time'
                         required
+                        onChange={handleChange}
                     />
                 </div>
 
                 <div>
-                    <label htmlFor="address">Address</label>
-                    <select id="address" defaultValue="Select Address">
-                        <option value="Select Address">Select Address</option>
-                        <option value="Uptown Market">Uptown Market</option>
-                        <option value="Riverside Street">Riverside Street</option>
-                        <option value="City Center">City Center</option>
+                    <label htmlFor="addressName">Address</label>
+                    <select
+                        id="addressName"
+                        name="addressName"
+                        defaultValue=""
+                        required
+                        onChange={handleChange}>
+                        <option value="" disabled>Select Address</option>
+                        {userDetails?.addresses?.map((req, i) => (
+                            <option key={i} value={req.name}>{req.name}</option>
+                        ))}
                     </select>
                 </div>
 
-                <button type="button">Submit</button>
+                <button type="submit">Submit</button>
             </form>
             </div>
         </div>

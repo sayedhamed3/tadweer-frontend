@@ -13,6 +13,7 @@ import AddressForm from './components/Address/AddressForm'
 import AddressDetails from './components/Address/AddressDetails'
 import NewDispose from './components/Company/NewDispose'
 import Achievement from './components/Company/Achievement'
+import Profile from './components/Auth/Profile'
 
 import MaterialDetails from './components/Company/MaterialDetails'
 
@@ -35,8 +36,8 @@ function App() {
         <Route path="/company-disposes" element={<CompanyDisposes/>}/>
         <Route path="/dispose-request" element={<NewDispose/>}/>
         <Route path="/achievement" element={<Achievement/>}/>
-
         <Route path="/materials/:materialId" element={<MaterialDetails />} />
+        <Route path="/profile" element={<Profile/>}/>
       </Routes>
     </>
   )
