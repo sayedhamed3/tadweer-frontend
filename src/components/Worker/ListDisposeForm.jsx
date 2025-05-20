@@ -23,8 +23,11 @@ function ListDisposeForm() {
   }
 
   useEffect(() => {
-    getDisposals()
-  }, [])
+    if(user) {
+      console.log(user?.workerId)
+      getDisposals()
+    }
+  }, [user])
 
   
 

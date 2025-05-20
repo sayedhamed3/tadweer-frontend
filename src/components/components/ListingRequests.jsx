@@ -1,14 +1,38 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router';
+import { acceptDisposal, getAllDisposals, getAllPendingDisposals, getDisposalByWorkerId, rejectDisposal } from '../../services/disposalServices';
+import { authContext } from '../../context/AuthContext';
 
 
 function ListingRequests(props) {
     
   const { disposals, isForm } = props;
-    
-    const handleAccept = (company) => alert(`Accepted: ${company}`);
-    const handleReject = (company) => alert(`Rejected: ${company}`);
-    
+  const { user } = useContext(authContext)
+  const navigate = useNavigate()
+  const [disposes, setDisposes] = useState([{}])
+
+  async function acceptRequest(id) {
+    try {
+      const accepted = await acceptDisposal(id)
+      if(accepted) {
+        window.location.reload()
+      }
+    } catch (error) {
+      console.log("Something Occurred")
+    }
+  }
+
+  async function rejectRequest(id) {
+    try {
+      const accepted = await rejectDisposal(id)
+      if(accepted) {
+        window.location.reload()
+      }
+    } catch (error) {
+      console.log("Something Occurred")
+    }
+  }
+
   return (
     <div className="page">
 
@@ -26,13 +50,13 @@ function ListingRequests(props) {
       </div>
 
       <div className="table-container">
-        {disposals.map((req) => (
-          <div key={req._id} className="row">
+        {disposals.map((req, i) => (
+          <div key={i} className="row">
 
             <div className="info">
 
               <div className="company-name-with-location">
-                {/* <span className="company-name">{req.company.name}</span> */}
+                <span className="company-name">{req.addressName}</span>
                 <button className="location-button">Location</button>
               </div>
 
@@ -42,10 +66,10 @@ function ListingRequests(props) {
             <div className="buttons">
               {
                 !isForm ? 
-                <button className="button form" onClick={() => handleAccept(req.company)}>Form</button> :
+                <button className="button form" onClick={() => navigate('/form-details')}>Form</button> :
                 <>
-                    <button className="button accept" onClick={() => handleAccept(req.company)}>Accept</button>
-                    <button className="button reject" onClick={() => handleReject(req.company)}>Reject</button>
+                    <button className="button accept" onClick={() => acceptRequest(req._id)}>Accept</button>
+                    <button className="button reject" onClick={() => rejectRequest(req._id)}>Reject</button>
                 </>
               }
             </div>
