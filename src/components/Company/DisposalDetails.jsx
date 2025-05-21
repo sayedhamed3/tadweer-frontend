@@ -44,19 +44,19 @@ function DisposalDetails() {
         <div className="dispose-card">
           <div className="info-material">
             <div className="info">
-              <h1>Disposal Details</h1>
-              <p><strong>Company:</strong> {disposal?.company.name}</p>
-              <p><strong>Date:</strong> {disposal?.disposalDate}</p>
-              <p><strong>Address</strong> {disposal?.addressName}</p>
-              <p><strong>Status:</strong> {disposal?.status}</p>
-              {disposal?.status == "Rejected" && (<p><strong>Rejection Message:</strong> {disposal?.rejectionMessage}</p>)}
-              <p><strong>Total Price:</strong> {disposal?.totalPrice} BHD</p>
-              <p><strong>Assigned Worker:</strong> {disposal?.worker ? disposal?.worker.name : "No worker assigned yet"}</p>
+              <h1 className="company-name">Disposal Details</h1>
+              <p className="time"><strong>Company:</strong> {disposal?.company.name}</p>
+              <p className="time"><strong>Date:</strong> {disposal?.disposalDate}</p>
+              <p className="time"><strong>Address</strong> {disposal?.addressName}</p>
+              <p className="time"><strong>Status:</strong> {disposal?.status}</p>
+              {disposal?.status == "Rejected" && (<p className="time"><strong>Rejection Message:</strong> {disposal?.rejectionMessage}</p>)}
+              <p className="time"><strong>Total Price:</strong> {disposal?.totalPrice} BHD</p>
+              <p className="time"><strong>Assigned Worker:</strong> {disposal?.worker ? disposal?.worker.name : "No worker assigned yet"}</p>
             </div>
           </div>
 
-          <div className="container" style={{ marginTop: "20px" }}>
-            <h3>Material Collected:</h3>
+          <div className="container" style={{ marginTop: "5px" }}>
+            <h3 className="company-name">Material Collected:</h3>
             <div className='disposal-material-container'>
                 {disposal?.materials ? disposal?.materials.map((req) => (
                     <div key={req._id} className='material-card'>

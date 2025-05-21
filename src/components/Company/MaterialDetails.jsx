@@ -57,7 +57,7 @@ function MaterialDetails() {
         <div className="dispose-card">
           <div className="info-material">
             <div className="info">
-              <h1>{material.name}</h1>
+              <h1 className="company-name">{material.name}</h1>
               <img  src={`/images/${material.type}/${material.imageUrl}`} alt={material.name} width="150" />
               <p><strong>Type:</strong> {capitalize(material.type)}</p>
               <p><strong>Unit:</strong> {material.unit}</p>
@@ -68,7 +68,7 @@ function MaterialDetails() {
           </div>
 
           <div className="container" style={{ marginTop: "20px"}}>
-            <h3>Environmental Impact per {material.unit}</h3>
+            <h3 className="company-name">Environmental Impact per {material.unit}</h3>
             <ul>
               <li>CO₂ Saved: {material.environmentalImpact.co2SavedPerUnit} kg</li>
               <li>Water Saved: {material.environmentalImpact.waterSavedPerUnit} liters</li>

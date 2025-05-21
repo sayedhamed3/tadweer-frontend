@@ -167,27 +167,6 @@ function NewDispose() {
                 </button>
             </div>
 
-            {!isSchedule && userDetails?.pickUpSchedule && userDetails?.pickUpSchedule.map((req) => (
-
-                    <div key={req._id} className="row">
-
-                        <div className="info">
-                            <div className="company-name-with-location">
-                                <span className="company-name">{req.day}</span>
-                            </div>
-
-                            <div className="time">{`${req.time}, ${req.addressName}`}</div>
-                        </div>
-
-                        <div className="buttons">
-                        {/* <button className="button form" onClick={() => navigate('/address-form', { state: { id: req._id, isEdited: true } })}>Edit</button> */}
-                        <button className="button reject" onClick={() => (removeSchedule(req._id))}>Remove</button>
-                        </div>
-
-                    </div>
-
-                ))}
-
             <form onSubmit={handleSubmit}>
 
                 {
@@ -264,15 +243,38 @@ function NewDispose() {
                     </select>
                 </div>
                 <div>
-                    <button type='cancel' onClick={returnToDisposals}>Back to Disposals</button>
+                    <button type='cancel' onClick={returnToDisposals} style={{ marginRight: "20px"}}>Back to Disposals</button>
                     {!isSchedule && (
                         <button type="button" onClick={clearSchedule}>
                             Clear Schedule
                         </button>
                     )}
-                    <button type="submit">{isSchedule ? "Book Disposal" : "Add Schedule"}</button>    
+                    <button type="submit" style={{ marginLeft: isSchedule ? "0px" : "20px"}}>{isSchedule ? "Book Disposal" : "Add Schedule"}</button>    
                 </div>
             </form>
+
+            <div style={{ height: "30px"}}></div>
+
+            {!isSchedule && userDetails?.pickUpSchedule && userDetails?.pickUpSchedule.map((req) => (
+
+            <div key={req._id} className="row">
+
+                <div className="info">
+                    <div className="company-name-with-location">
+                        <span className="company-name">{req.day}</span>
+                    </div>
+
+                    <div className="time">{`${req.time}, ${req.addressName}`}</div>
+                </div>
+
+                <div className="buttons">
+                {/* <button className="button form" onClick={() => navigate('/address-form', { state: { id: req._id, isEdited: true } })}>Edit</button> */}
+                <button className="button reject" onClick={() => (removeSchedule(req._id))}>Remove</button>
+                </div>
+
+            </div>
+
+            ))}
             </div>
         </div>
 
