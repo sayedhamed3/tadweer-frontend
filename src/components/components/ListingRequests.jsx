@@ -51,7 +51,7 @@ function ListingRequests(props) {
             }
         </div>
         <br />
-        <div className="header">Help protect the environment by collecting items and recycling them</div>
+        <div className="header">Accept collection requests at your convenience to gather recyclable materials and deliver them to our main location in support of protecting green life.</div>
       </div>
 
       <div className="table-container">

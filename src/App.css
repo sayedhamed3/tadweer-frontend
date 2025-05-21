@@ -220,14 +220,6 @@ html, body {
   position: relative;
 }
 
-.new-dispose-alignment {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  margin-bottom: 24px;
-  position: relative;
-}
-
 .form-toggle button {
   background: transparent;
   border: none;
@@ -238,6 +230,14 @@ html, body {
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: normal;
+  position: relative;
+}
+
+.new-dispose-alignment {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 24px;
   position: relative;
 }
 
@@ -380,8 +380,10 @@ html, body {
 }
 
 .info-material {
+  padding: 20px 0px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-items: center;
 }
 
 .company-name {
@@ -700,6 +702,8 @@ html, body {
 }
 
 .material-img {
+  height: 50px;
+  width: 50px;
   padding-inline-end: 20px;
 }
 

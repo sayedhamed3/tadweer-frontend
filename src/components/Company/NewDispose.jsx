@@ -137,7 +137,7 @@ function NewDispose() {
         </div>
         <br />
         <div className="header">
-          Help protect the environment by collecting items and recycling them
+            Submit your request by reserving a date and time that suits you, at your preferred location.
         </div>
       </div>
 

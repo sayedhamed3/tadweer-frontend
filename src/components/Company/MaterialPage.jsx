@@ -74,7 +74,7 @@ function MaterialPage() {
           <div className="dark-green-text">Accepted Material</div>
         </div>
         <br />
-        <div className="header">Help protect the environment by collecting items and recycling them</div>
+        <div className="header">Here is the list of materials we are able to collect and accept from your location.</div>
       </div>
 
       <div className='right-content'>
@@ -102,11 +102,11 @@ function MaterialPage() {
           {materials.map((material) => (
 
             <div key={material.id} className="rowd">
-              <Link to={`/materials/${material._id}`} >
+              <Link to={`/materials/${material._id}` } >
                 <div className="info-material">
                   <img className='material-img' src={`/images/${material.type}/${material.imageUrl}`} alt={material.name} width="100" />
                   <div className="info">
-                    <span className="company-name">{material.name}</span>
+                    <span className="time">{material.name}</span>
                     <div className="time">{material.details}</div>
                   </div>
                 </div>

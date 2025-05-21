@@ -55,7 +55,7 @@ function AuthForm() {
   return (
     <div className="homepage">
       <div className="login-card">
-        <div className="form-toggle-new">
+        <div className="form-toggle">
           <button
             className={isCompany ? "active" : ""}
             onClick={() => setIsCompany(true)}

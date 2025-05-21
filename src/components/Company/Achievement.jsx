@@ -274,8 +274,8 @@ function Achievement() {
                             </div>
                         </div>
                         <div className='achievement-titles'>
-                            <h1>Your Achievements</h1>
-                            <h1>All Achievements</h1>
+                            <h2>Your Achievements</h2>
+                            <h2>All Achievements</h2>
                         </div>
                         <div className='achievements-table'>
                             <div className='table-container-achievement'>
@@ -303,7 +303,7 @@ function Achievement() {
                                             <div className="info">
                                                 <div className="badge-info">
                                                     <img className='achievement-img' src={`/images/badges/${achievement.badgeIcon}`} alt='Stainless Steel' />
-                                                    <div className="company-name">{achievement.title}</div>
+                                                    <div className="time">{achievement.title}</div>
                                                 </div>
                                             </div>
 

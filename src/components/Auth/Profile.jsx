@@ -48,14 +48,14 @@ function Profile() {
         <div className="dark-green-text">Profile</div>
     </div>
     <br />
-    <div className="header">Help protect the environment by collecting items and recycling them</div>
+    <div className="header">Your company details are listed here, and you can add or remove addresses as needed.</div>
     </div>
 
     <div className="table-container-right">
-    <div className="button-row">
+    {/* <div className="button-row">
         <div></div>
         <button className="button reject" onClick={() => deleteAccount()}>Delete Profile</button>
-    </div>
+    </div> */}
     
     <div className="dispose-card">
         <div className="info">

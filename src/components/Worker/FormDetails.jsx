@@ -92,7 +92,7 @@ function FormDetails(pros) {
         </div>
         <br />
         <div className="header">
-          Help protect the environment by collecting items and recycling them
+          Enter the details of the collected materials for the green life records.
         </div>
       </div>
 

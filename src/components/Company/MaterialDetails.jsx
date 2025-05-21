@@ -49,16 +49,16 @@ function MaterialDetails() {
         </div>
         <br />
         <div className="header">
-          Help protect the environment by collecting items and recycling them
+          The material details are thoroughly described, please take your time to read the information carefully.
         </div>
       </div>
 
       <div className="table-container">
         <div className="dispose-card">
           <div className="info-material">
-            <img className="material-img" src={`/images/${material.type}/${material.imageUrl}`} alt={material.name} width="150" />
             <div className="info">
               <h1>{material.name}</h1>
+              <img  src={`/images/${material.type}/${material.imageUrl}`} alt={material.name} width="150" />
               <p><strong>Type:</strong> {capitalize(material.type)}</p>
               <p><strong>Unit:</strong> {material.unit}</p>
               <p><strong>Price per Unit:</strong> {material.pricePerUnit} BHD</p>
@@ -67,7 +67,7 @@ function MaterialDetails() {
             </div>
           </div>
 
-          <div className="container" style={{ marginTop: "20px" }}>
+          <div className="container" style={{ marginTop: "20px"}}>
             <h3>Environmental Impact per {material.unit}</h3>
             <ul>
               <li>CO₂ Saved: {material.environmentalImpact.co2SavedPerUnit} kg</li>
@@ -79,7 +79,7 @@ function MaterialDetails() {
             </ul>
           </div>
         </div>
-        <button onClick={goBack}>Back</button>
+        <button onClick={goBack} style={{ marginBottom: "20px"}}>Back</button>
       </div>
     </div>
   );

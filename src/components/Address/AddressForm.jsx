@@ -157,7 +157,7 @@ function AddressForm(props) {
         </div>
         <br />
         <div className="header">
-          Help protect the environment by collecting items and recycling them
+          Add a new address for your site that contains recyclable materials to help protect green life.
         </div>
       </div>
 

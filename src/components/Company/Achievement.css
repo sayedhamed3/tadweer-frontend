@@ -61,7 +61,7 @@
 }
 
 .table-container-achievement {
-  max-width: 40%;
+  max-width: 45%;
       margin:0;
     padding:10px;
     max-height: 30vh;
@@ -76,8 +76,8 @@
 
 .achievement-img{
   min-width: 50px;
-  width: 5em;
-  height: 5em;
+  width: 60px;
+  height: 60px;
   min-height: 50px;
 }
 
@@ -89,7 +89,7 @@
 }
 
 .bar-div{
-    max-width: 40%;
+    max-width: 45%;
     padding: 10px;
 }
 .charts {

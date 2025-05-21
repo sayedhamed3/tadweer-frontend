@@ -47,7 +47,7 @@ function CompanyDisposes() {
                 <div className="dark-green-text">Disposes</div>
             </div>
             <br />
-            <div className="header">Help protect the environment by collecting items and recycling them</div>
+            <div className="header">Schedule a specific date or day to collect materials from your site to help preserve green life.</div>
             </div>
 
             <div className="table-container-right">
