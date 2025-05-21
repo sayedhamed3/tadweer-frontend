@@ -17,14 +17,35 @@ function Achievement() {
 
     const [achievements, setAchievements] = useState(null)
     const [userAchievements, setUserAchievements] = useState(null)
+    const [userStats, setUserStats] = useState({
+        totalDisposals: 0,
+        totalCO2Saved: 0,
+        totalWaterSaved: 0,
+        totalEnergySaved: 0,
+        totalLandfillSpaceSaved: 0,
+        totalOilSaved: 0,
+        totalTreesSaved: 0,
+        materialStats:{
+            plastic: { totalQuantitySaved: 0},
+            electronic: { totalQuantitySaved: 0 },
+            glass: { totalQuantitySaved: 0 },
+            metal: { totalQuantitySaved: 0 },
+            paper: { totalQuantitySaved: 0 },
+            organic: { totalQuantitySaved: 0 }
+        }
+    })
     const [error, setError] = useState(null)
 
     const getUserAchievements = async () => {
         try {
-            if (user){const res = await getOneCompany(companyId)
-            console.log(res)
-            setUserAchievements(res.achievements)
-            console.log(user)}
+            if (user) {
+                console.log("Getting Company")
+                const res = await getOneCompany(companyId)
+                setUserAchievements(res.achievements)
+                console.log(res)
+                setUserStats(res.stats)
+                console.log("Stats:", userStats)
+            }
         } catch (err) {
             console.log(err)
             setError("Error getting Companie's Achievement")
@@ -35,7 +56,6 @@ function Achievement() {
     const getAchievements = async () => {
         try {
             const res = await getAllAchievements()
-            console.log(res)
             setAchievements(res)
         } catch (err) {
             console.log(err)
@@ -48,11 +68,22 @@ function Achievement() {
         getUserAchievements()
     }, [])
 
+    useEffect(() => {
+        console.log("Updated Stats:", userStats)
+    }, [userStats])
+
     const environmentData = {
         labels: ['CO2', 'Water', 'Energy', 'Trees', 'Landfill Space', 'Oil'],
         datasets: [
             {
-                data: [1200, 1900, 1500, 2200, 1800, 1500],
+                data: [
+                    userStats.totalCO2Saved,
+                    userStats.totalWaterSaved,
+                    userStats.totalEnergySaved,
+                    userStats.totalTreesSaved,
+                    userStats.totalLandfillSpaceSaved,
+                    userStats.totalOilSaved
+                ],
                 backgroundColor: [
                     'rgba(255, 255, 255, 0.7)',
                     'rgba(82, 166, 245, 0.7)',
@@ -73,7 +104,14 @@ function Achievement() {
         labels: ['Electronic', 'Glass', 'Metal', 'Organic', 'Paper', 'Plastic'],
         datasets: [
             {
-                data: [1200, 1900, 1500, 2200, 1800, 1000],
+                data: [
+                    userStats.materialStats.electronic.totalQuantitySaved,
+                    userStats.materialStats.glass.totalQuantitySaved,
+                    userStats.materialStats.metal.totalQuantitySaved,
+                    userStats.materialStats.organic.totalQuantitySaved,
+                    userStats.materialStats.paper.totalQuantitySaved,
+                    userStats.materialStats.plastic.totalQuantitySaved,
+                ],
                 backgroundColor: [
                     'rgba(199, 248, 63, 0.7)',
                     'rgba(74, 253, 253, 0.7)',
@@ -241,7 +279,7 @@ function Achievement() {
                         </div>
                         <div className='achievements-table'>
                             <div className='table-container-achievement'>
-                                {Array.isArray(userAchievements) && userAchievements.length > 0 ? userAchievements.map((achievement,i) => {
+                                {Array.isArray(userAchievements) && userAchievements.length > 0 ? userAchievements.map((achievement, i) => {
                                     return (
                                         <div key={i} className="rowa">
 
@@ -258,7 +296,7 @@ function Achievement() {
                                 }) : (<div className="rowa">No Achievements Yet</div>)}
                             </div>
                             <div className='table-container-achievement'>
-                                {achievements ? achievements.map((achievement,i) => {
+                                {achievements ? achievements.map((achievement, i) => {
                                     return (
                                         <div key={i} className="rowa">
 

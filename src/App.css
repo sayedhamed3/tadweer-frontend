@@ -724,3 +724,14 @@ html, body {
   justify-content: space-between;
   align-items: center;
 }
+
+
+.error-div{
+  border: none;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+.error-message {
+  font-size: 0.5em;
+  color: red;
+}

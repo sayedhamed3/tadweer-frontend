@@ -91,7 +91,7 @@ function CompanyDisposes() {
                     </div>
 
                     <div className="buttons">
-                        <button className="more-details-button">More Details</button>
+                        <button onClick={() => navigate(`./${req._id}`)} className="more-details-button">More Details</button>
                     </div>
                 
                 </div>

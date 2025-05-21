@@ -118,7 +118,7 @@ const modifyScheduleInCompany = async (id,scheduleId, scheduleData) => {
 const removeScheduleFromCompany = async (id, scheduleId) => {
     try {
         const token = localStorage.getItem("token");
-        const response = await axios.delete(`${BASE_URL}/${id}/pickUpSchedule`, { scheduleId }, 
+        const response = await axios.delete(`${BASE_URL}/${id}/pickUpSchedule/${scheduleId}`, 
             { headers: {Authorization: `Bearer ${token}`} }
         );
 

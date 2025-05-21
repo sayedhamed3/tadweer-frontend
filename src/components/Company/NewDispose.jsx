@@ -2,13 +2,16 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { createDisposal } from '../../services/disposalServices'
 import { authContext } from '../../context/AuthContext'
-import { addScheduleToCompany, getOneCompany } from '../../services/companyServices'
+import { addScheduleToCompany, getOneCompany, removeScheduleFromCompany, clearScheduleFromCompany } from '../../services/companyServices'
 
 function NewDispose() {
     const navigate = useNavigate()
     const { user } = useContext(authContext)
     const [isSchedule, setIsSchedule] = useState(false)
     const [userDetails, setUserDetails] = useState({})
+    const [daysAvailable, setDaysAvailable] = useState([])
+    const timesAvailable = ["08:00", "08:30", "09:00", "09:30", "10:00", "10:30","11:00", "11:30", "12:00", "12:30", "13:00", "13:30","14:00", "14:30", "15:00", "15:30", "16:00", "16:30","17:00", "17:30", "18:00"
+    ];
     const [formData, setFormData] = useState({
         company: "",
         day: "",
@@ -17,10 +20,15 @@ function NewDispose() {
         addressName: "",
     })
 
+
+
     async function getUserDetails() {
         try {
             const userInfo = await getOneCompany(user?.companyId);
             setUserDetails(userInfo);
+            const allDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            const scheduledDays = userInfo.pickUpSchedule?.map(schedule => schedule.day) || [];
+            setDaysAvailable(allDays.filter(day => !scheduledDays.includes(day)));
         } catch (error) {
             console.error('Error fetching user details:', error);
         }
@@ -40,11 +48,22 @@ function NewDispose() {
         });
     }
 
+    const removeSchedule = async (scheduleId) => {
+        try {
+            await removeScheduleFromCompany(user?.companyId, scheduleId)
+
+            getUserDetails()
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     async function createNewDispose() {
         try {
-            const selectedDate = formData.day !== "" ? formData.day : Date(`${formData.date}${formData.time}`)
+            const selectedDate = formData.day !== "" ? formData.day : `${formData.date}T${formData.time}:00.000+00:00`
 
-            const disposalForm = formData.day !== "" ? {
+            console.log("Selected Date: ",selectedDate)
+            const disposalForm = formData.day == "" ? {
                 company: user?.companyId,
                 disposalDate: selectedDate,
                 addressName: formData.addressName
@@ -55,17 +74,41 @@ function NewDispose() {
                 addressName: formData.addressName
             }
 
-            console.log(disposalForm.addressName)
-            if(user?.company) {
+
+
+            console.log(disposalForm)
+            if(formData.day == "") {
                 await createDisposal(disposalForm) 
+                navigate('/company-disposes')
             } else {
-                addScheduleToCompany(disposalForm)
+                await addScheduleToCompany(disposalForm.company,disposalForm)
+                getUserDetails()
+                setFormData({
+                    company: "",
+                    day: "",
+                    date: "",
+                    time: "",
+                    addressName: "",
+                });
             }
             
-        } catch (error) {
-            
+        } catch (err) {
+            console.log(err)
         }
     }
+
+    const returnToDisposals = () => navigate('/company-disposes')
+
+
+    const clearSchedule = async () => {
+        try {
+            await clearScheduleFromCompany(user?.companyId)
+
+            getUserDetails()
+        } catch (err) {
+            console.log(err)
+        }
+    } 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -79,7 +122,6 @@ function NewDispose() {
                     time: "",
                     addressName: "",
                 });
-                navigate('/company-disposes')
            }
         } catch (err) {
             console.log(err)
@@ -125,6 +167,27 @@ function NewDispose() {
                 </button>
             </div>
 
+            {!isSchedule && userDetails?.pickUpSchedule && userDetails?.pickUpSchedule.map((req) => (
+
+                    <div key={req._id} className="row">
+
+                        <div className="info">
+                            <div className="company-name-with-location">
+                                <span className="company-name">{req.day}</span>
+                            </div>
+
+                            <div className="time">{`${req.time}, ${req.addressName}`}</div>
+                        </div>
+
+                        <div className="buttons">
+                        {/* <button className="button form" onClick={() => navigate('/address-form', { state: { id: req._id, isEdited: true } })}>Edit</button> */}
+                        <button className="button reject" onClick={() => (removeSchedule(req._id))}>Remove</button>
+                        </div>
+
+                    </div>
+
+                ))}
+
             <form onSubmit={handleSubmit}>
 
                 {
@@ -134,13 +197,11 @@ function NewDispose() {
                             <label htmlFor="day">Day</label>
                             <select id="day" name='day' defaultValue="Select Day" onChange={handleChange}>
                                 <option value="Select Day">Select Day</option>
-                                <option value="Monday">Monday</option>
-                                <option value="Tuesday">Tuesday</option>
-                                <option value="Wednesday">Wednesday</option>
-                                <option value="Thursday">Thursday</option>
-                                <option value="Friday">Friday</option>
-                                <option value="Saturday">Saturday</option>
-                                <option value="Sunday">Sunday</option>
+                                {daysAvailable?.map((day) => (
+                                    <option key={day} value={day}>
+                                        {day}
+                                    </option>
+                                ))}
                             </select>
                         </div>
                     </> : 
@@ -151,6 +212,7 @@ function NewDispose() {
                                 type="date"
                                 id="date"
                                 name="date"
+                                value={formData.date}
                                 required
                                 onChange={handleChange}
                             />
@@ -159,14 +221,31 @@ function NewDispose() {
                 }
 
                 <div>
-                    <label htmlFor="time">Material</label>
-                    <input
-                        type="time"
+                    <label htmlFor="time">Time</label>
+                    <select
                         id="time"
                         name='time'
+
+                        value={formData.time}
                         required
                         onChange={handleChange}
-                    />
+                    >
+                        <option value="">Select time</option>
+                        {timesAvailable.map((time) => {
+                            if(time < "12:00")
+                                return (
+                                    <option key={time} value={time}> {time} A.M.</option>
+                                )
+                            else
+                                return (
+                                    <option key={time} value={time}>
+                                        {(parseInt(time.split(":")[0], 10) % 12 || 12) + ":" + time.split(":")[1]} P.M.
+                                    </option>
+                                )
+                        })}
+
+
+                    </select>
                 </div>
 
                 <div>
@@ -175,6 +254,7 @@ function NewDispose() {
                         id="addressName"
                         name="addressName"
                         defaultValue=""
+                        value={formData.addressName}
                         required
                         onChange={handleChange}>
                         <option value="" disabled>Select Address</option>
@@ -183,8 +263,15 @@ function NewDispose() {
                         ))}
                     </select>
                 </div>
-
-                <button type="submit">Submit</button>
+                <div>
+                    <button type='cancel' onClick={returnToDisposals}>Back to Disposals</button>
+                    {!isSchedule && (
+                        <button type="button" onClick={clearSchedule}>
+                            Clear Schedule
+                        </button>
+                    )}
+                    <button type="submit">{isSchedule ? "Book Disposal" : "Add Schedule"}</button>    
+                </div>
             </form>
             </div>
         </div>
