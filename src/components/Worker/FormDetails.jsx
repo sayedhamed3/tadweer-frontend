@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { authContext } from '../../context/AuthContext';
 import { getAllMaterials } from '../../services/materialServices';
-import { addMaterialToDisposal, getDisposalByWorkerId, getOneDisposal, removeMaterialFromDisposal } from '../../services/disposalServices';
+import { addMaterialToDisposal, completeDisposal, getDisposalByWorkerId, getOneDisposal, removeMaterialFromDisposal } from '../../services/disposalServices';
 
 function FormDetails(pros) {
   const navigate = useNavigate()
@@ -67,6 +67,16 @@ function FormDetails(pros) {
     }
   }
 
+  async function completedRequest() {
+    try {
+      console.log(`REQ ID ${requestId}`)
+      await completeDisposal(requestId)
+      navigate('/display-dispose')
+    } catch (error) {
+      console.log('Something Occurred')
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -99,6 +109,7 @@ function FormDetails(pros) {
       <div className="table-container">
         <div className="dispose-card">
           <div className="info">
+          <button className="green-button" onClick={() => completedRequest()}>Completed</button>
           <div className="company-name-with-location">
               <span className="company-name">{address.name || ""}</span>
               <div className="location-button">Location</div>
@@ -152,13 +163,12 @@ function FormDetails(pros) {
 
           {requestMaterial.map((req, i) => {
             const foundM = materials.find(mat => mat._id === req.material);
-            if (!foundM) return null;
 
             return (
               <div key={i} className="row">
                 <div className="info">
                   <div className="company-name-with-location">
-                    <span className="company-name">{foundM.name}</span>
+                    <span className="company-name">{ foundM ? foundM.name : ""}</span>
                   </div>
                   <div className="time">{`Quantity: ${req.quantity}`}</div>
                 </div>

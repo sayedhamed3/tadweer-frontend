@@ -587,6 +587,17 @@ html, body {
 }
 
 
+.request-status-accepted {
+  background-color: #28a745; 
+  border: 1px solid #28a745;
+  color: #ffffff;
+  padding: 2px 8px;
+  margin: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: 600;
+}
 
 .request-status-rejected {
   background-color: #dc3545;
