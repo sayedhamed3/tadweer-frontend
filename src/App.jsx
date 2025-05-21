@@ -14,6 +14,7 @@ import AddressDetails from './components/Address/AddressDetails'
 import NewDispose from './components/Company/NewDispose'
 import Achievement from './components/Company/Achievement'
 import Profile from './components/Auth/Profile'
+import DisposalDetails from './components/Company/DisposalDetails'
 
 import MaterialDetails from './components/Company/MaterialDetails'
 
@@ -38,6 +39,7 @@ function App() {
         <Route path="/achievement" element={<Achievement/>}/>
         <Route path="/materials/:materialId" element={<MaterialDetails />} />
         <Route path="/profile" element={<Profile/>}/>
+        <Route path="/company-disposes/:disposalId" element={<DisposalDetails />} />
       </Routes>
     </>
   )
