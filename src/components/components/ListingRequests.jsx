@@ -66,17 +66,27 @@ function ListingRequests(props) {
                   const matchedAddress = req.company.addresses.find(
                     (address) => address.name === req.addressName
                   )
-                  openGoogleMaps(matchedAddress ? matchedAddress.coordinates.lat : 0.0, matchedAddress ? matchedAddress.coordinates.lng : 0.0)
-                }}>Location</button>
-              </div>
+                    openGoogleMaps(matchedAddress ? matchedAddress.coordinates.lat : 0.0, matchedAddress ? matchedAddress.coordinates.lng : 0.0)
+                  }}>Location</button>
+                  </div>
 
-              <div className="time">{Date(req.disposalDate)}</div>
-            </div>
+                  <div className="time">
+                  {(() => {
+                    const date = new Date(req.disposalDate);
+                    const options = { hour: '2-digit', minute: '2-digit', hour12: true };
+                    const time = date.toLocaleTimeString([], options);
+                    const day = date.getDate().toString().padStart(2, '0');
+                    const month = date.toLocaleString('default', { month: 'short' });
+                    const year = date.getFullYear();
+                    return `${time} ${day} ${month} ${year}`;
+                  })()}
+                  </div>
+                </div>
 
-            <div className="buttons">
-              {
-                !isForm ? 
-                <button className="button form" onClick={() => {
+                <div className="buttons">
+                  {
+                  !isForm ? 
+                  <button className="button form" onClick={() => {
                   const matchedAddress = req.company.addresses.find(
                     (address) => address.name === req.addressName
                   )

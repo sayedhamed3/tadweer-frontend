@@ -16,7 +16,8 @@ function ListDisposeForm() {
   const getDisposals = async () => {
     try {
       const response = await getDisposalByWorkerId(workerId)
-      setDisposals(response)
+      const acceptedDisposals = response.filter(d => d.status === "Accepted")
+      setDisposals(acceptedDisposals)
     } catch (error) {
       console.error("Error fetching disposal by worker id:", error)
     }

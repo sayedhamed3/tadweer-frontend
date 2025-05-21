@@ -7,6 +7,7 @@ import { addMaterialToDisposal, completeDisposal, getDisposalByWorkerId, getOneD
 function FormDetails(pros) {
   const navigate = useNavigate()
   const { user } = useContext(authContext)
+  const [ disposal, setDisposal] = useState(null)
   const [ materials, setMaterials ] = useState([{}])
   const passedData = useLocation()
   const { address, requestId, date } = passedData.state || {}
@@ -21,6 +22,7 @@ function FormDetails(pros) {
     try {
       const foundedMaterials = await getOneDisposal(requestId)
       setRequestMaterial(foundedMaterials.materials)
+      setDisposal(foundedMaterials)
     } catch (error) {
       console.log('Something Occurred')
     }
@@ -52,7 +54,9 @@ function FormDetails(pros) {
 
   async function addMaterial() {
     try {
-      await addMaterialToDisposal(requestId, formData)
+      await addMaterialToDisposal(requestId, {...formData,
+        quantity: Number(formData.quantity),
+      })
     } catch (error) {
       console.log('Something Occurred')
     }
@@ -61,7 +65,7 @@ function FormDetails(pros) {
   async function removeMaterial(id) {
     try {
       await removeMaterialFromDisposal(requestId, id)
-      navigate('/list-dispose-form')
+      await getRequestMaterial();
     } catch (error) {
       console.log('Something Occurred')
     }
@@ -80,13 +84,14 @@ function FormDetails(pros) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-       if(formData.addressName !== "") {
-            addMaterial()
+       if(formData.material && formData.quantity) {
+            await addMaterial()
             setFormData({
               material: "",
               quantity: "",
             });
-            navigate('/list-dispose-form')
+            await getRequestMaterial()
+            // navigate('/list-dispose-form')
        }
     } catch (err) {
         console.log(err)
@@ -109,13 +114,16 @@ function FormDetails(pros) {
       <div className="table-container">
         <div className="dispose-card">
           <div className="info">
-          <button className="green-button" onClick={() => completedRequest()}>Completed</button>
+          <button className="green-button" disabled={!requestMaterial.length || requestMaterial[0].material == null} onClick={() => completedRequest()}>Completed</button>
           <div className="company-name-with-location">
-              <span className="company-name">{address.name || ""}</span>
+              <span className="company-name">{address?.name || ""}</span>
               <div className="location-button">Location</div>
           </div>
+          <div className="time">Company: {disposal?.company?.name}</div>
           <div className="time">{`Address: ${address.country}, ${address.state}. ${address.city}, ${address.street}`}</div>
-          <div className="time">{Date(date)}</div>
+          <div className="time">Date: {(date)}</div>
+          <div className="time">Total: {disposal?.totalPrice} BHD</div>
+          <div className="time">Status: {disposal?.status}</div>
           </div>
 
           <form onSubmit={handleSubmit}>
@@ -143,7 +151,7 @@ function FormDetails(pros) {
                 onChange={handleChange}
                 />
             </div>
-            <div>
+            {/* <div>
                 <label htmlFor="weight">Weight (kg)</label>
                 <input
                 type="number"
@@ -157,24 +165,29 @@ function FormDetails(pros) {
                 type="text"
                 id="notes"
                 />
-            </div>
-            <button type="submit">Submit</button>
+            </div> */}
+            <button type="submit">Add Material</button>
           </form>
 
           {requestMaterial.map((req, i) => {
-            const foundM = materials.find(mat => mat._id === req.material);
 
             return (
               <div key={i} className="row">
                 <div className="info">
                   <div className="company-name-with-location">
-                    <span className="company-name">{ foundM ? foundM.name : ""}</span>
+                    <span className="company-name">{ req.material?.name}</span>
                   </div>
                   <div className="time">{`Quantity: ${req.quantity}`}</div>
+                  <div className="time">{`Price: ${req.calculatedPrice?.toFixed(2)} BHD`}</div>
+
+
                 </div>
-                {/* <div className="buttons">
-                  <button className="button reject" onClick={() => removeMaterial(req._id)}>Delete</button>
-                </div> */}
+                <div className="buttons">
+                  <button className="button reject" onClick={() => {
+                    console.log("Removing material with ID:", req.material?._id);
+
+                    removeMaterial(req.material?._id)}}>Remove</button>
+                </div>
               </div>
             );
           })}

@@ -116,7 +116,7 @@ const acceptDisposal = async (id) => {
 }
 
 // Reject disposal (id, rejectionMessage)
-const rejectDisposal = async (id, rejectionMessage) => {
+const rejectDisposal = async (id, rejectionMessage = "Sorry Unable to take your order today") => {
     try {
         const token = localStorage.getItem("token");
         const response = await axios.put(`${BASE_URL}/${id}/reject`, { rejectionMessage }, 
@@ -167,7 +167,7 @@ const addMaterialToDisposal = async (id, materialData) => {
 const removeMaterialFromDisposal = async (id, materialId) => {
     try {
         const token = localStorage.getItem("token");
-        const response = await axios.delete(`${BASE_URL}/${id}/remove-material`, { materialId }, 
+        const response = await axios.put(`${BASE_URL}/${id}/remove-material`, { material: materialId }, 
             { headers: {Authorization: `Bearer ${token}`} }
         );
 
