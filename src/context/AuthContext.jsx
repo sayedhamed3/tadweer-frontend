@@ -21,21 +21,30 @@ function UserProvider(props){
             try{
 
                 const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/verify`,{headers:{Authorization:`Bearer ${token}`}})
-                console.log(response.data)
-                setUser(response.data)    
+
+                setUser(response.data)
+                if (response.data.companyId) {
+                    navigate("/achievement")
+                } else {
+                    navigate("/display-dispose")
+                }
             }
             // second condition if the token is not valid
             catch(err){
 
                 setUser(null)
                 console.log(err)
+                navigate('/')
             }
     
         }
         // third condition if there is no token in localstorage
         else{
             setUser(null)
+            navigate('/')
         }
+
+        console.log("User in context:" , user)
     }
 
     function logout(){
